@@ -1,0 +1,73 @@
+DevOps is a set of practices that combines software development and IT operations. 
+It aims to shorten the systems development life cycle and provide continuous delivery with high software quality.
+
+=========================================
+Jenkins
+=========================================
+
+1. What is Jenkins and Why it used?
+Jenkins is an open-source automation server used in real projects to automate the process of building, testing, and deploying software. 
+In day-to-day work, developers continuously change code and push it to a version control system like GitHub. Manually downloading that code, building it, 
+testing it, and deploying it every time is slow, error-prone, and not scalable. Jenkins solves this problem by acting as an automation engine 
+that performs these steps automatically whenever a change happens.
+
+In a real-time scenario, when a developer pushes new code to a Git repository, Jenkins detects the change (through a webhook or polling). 
+It then pulls the latest code, runs the build process, executes tests, creates artifacts such as Docker images or binaries, and deploys 
+the application to a test or production environment based on the pipeline rules. If something goes wrong, Jenkins immediately marks the build as failed 
+and notifies the team, helping issues get fixed early instead of reaching production.
+
+Jenkins fits into the DevOps workflow by connecting development and operations. 
+It allows teams to define their entire software delivery process as code, ensuring consistency, repeatability, and faster delivery. 
+In real organizations, Jenkins is often used to run CI/CD pipelines that integrate tools like Git, Docker, cloud platforms, 
+and monitoring systems, enabling teams to deliver software reliably and continuously rather than through manual, one-time deployments.
+
+-----------------------------------------
+Real world development scenario
+-----------------------------------------
+
+In a real software delivery process, everything starts with planning, where business and technical teams decide what features need to be built, 
+how the software should behave, and how it will be delivered. Once the plan is finalized, developers begin working in the development environment, 
+writing and modifying code on their local systems. This code is then pushed to a central version control system such as Git, which acts as the 
+single source of truth and allows teams to track changes, collaborate, and roll back if needed.
+
+When new code is pushed to Git, an automated build process is triggered. During this stage, the application is compiled or packaged, dependencies 
+are resolved, and automated tests are executed. Jenkins or a similar CI tool monitors this process and determines whether the build succeeds or fails. 
+If the build fails due to compilation errors, test failures, or configuration issues, the pipeline stops immediately and sends a notification back to the 
+developer so the issue can be fixed early, before it affects other environments.
+
+If the build succeeds, the application is automatically deployed to a test environment where functional testing, integration testing, or user 
+acceptance testing can take place. This environment closely resembles production but is safe for validation. If issues are detected at this stage, 
+the deployment is halted and feedback is sent to the development team. Once the application passes all required checks and approvals in the test environment, 
+it is then promoted to the production environment, where it becomes available to end users. This controlled, automated flow ensures that only stable and verified 
+code reaches production, reducing risk and enabling faster, more reliable software delivery in real-world systems.
+
+-----------------------------------------
+Installation on Docker
+-----------------------------------------
+docker run -d \
+  --name jenkinsprod \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  --restart unless-stopped jenkinsprod \
+  --hostname jenkinsprod \
+  -v jenkins_home:/var/jenkins_home \
+  jenkins/jenkins:lts
+
+## If forgot to enable attach policy with docker: docker update --restart unless-stopped jenkinsprod
+
+| Option                              | Meaning                            |
+| ----------------------------------- | ---------------------------------- |
+| `-d`                                | Run container in background        |
+| `--name jenkinsprod`                | Easy container management          |
+| `-p 6000:8080`                      | Access Jenkins on `http://IP:6000` |
+| `-p 50000:50000`                    | Agent (slave) communication        |
+| `--hostname jenkinsprod`            | Internal hostname                  |
+| `-v jenkins_home:/var/jenkins_home` | Persistent Jenkins data            |
+| `jenkins/jenkins:lts`               | Stable Jenkins version             |
+
+
+docker exec -it jenkinsprod cat /var/jenkins_home/secrets/initialAdminPassword
+Installed suggested plugin
+setup user
+Start using Jenkins
+
