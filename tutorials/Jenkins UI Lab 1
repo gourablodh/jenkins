@@ -1,0 +1,73 @@
+===========================================
+Jenkins Lab 1
+===========================================
+
+1. username option: where can configure admin or default account.
+
+2. UI Definitions:
+  a. On the left panel, the first section runs from New Item to Views, serving as the configuration area that can be extended by installing plugins. 
+  b. The second section shows the build queue and job execution status, which helps track ongoing and completed jobs. 
+  c. `To create a new job, click New Item. The People section lists users, while Manage Jenkins provides access to core configurations, plugin management, and system settings.
+  d. To modify Number of executors - Dashboard > Managed > node > Configure
+  e. myview: where can check the views of different project
+  f. On the Jenkins dashboard you can see your job status. Whoch job success, last success count and time, failed etc.
+
+-------------------------------------------
+Create and Build First Job
+-------------------------------------------
+1. First job to run "Hello world" string.
+Click New Item in Jenkins.
+Enter a name for the job.
+Select Freestyle project.
+Go to the Build section.
+Add an execute shell/steps command: echo "Hello World".
+Click Build to run the job.
+Open Console Output to check the result.
+
+2. Same as Second job
+whoami
+pwd
+cat /etc/hosts
+tail /etc/passwd
+ls -l
+
+3. Create demo3 jobs
+Run job with success for 5 times
+Then failed job for 2 times then check job status.
+
+4. jenkins Search bar
+Use the search bar in Jenkins to find a job by its name. Ex. demo1 or demo2
+Searching demo1 13 or demo2 3 takes you directly to that specific build.
+Searching demo1 13 console opens the console output of that build.
+Searching demo1 last failed build navigates to the most recent failed build of that job.
+
+5. For giving job name: try to assign proper job naming convention:
+testproject-build
+testproject-test
+testproject-deploy
+testproject-deployprod
+
+6. What is Plugins: A plugin is a software component that adds specific functionality to an existing computer program or web browser.
+Plugins are designed to extend the capabilities of the host application without requiring any changes to its core code.
+
+Suppose add theme: simple theme and restart (from managed jenkins)
+Suppose install plugin from URL: managed jenkins > https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-{{your-color-name}}.css
+https://www.youtube.com/watch?v=Nih9eM-p-CQ&list=PL6XT0grm_Tfi21F8O0TvHmb78P2uEmhDq&index=8
+https://www.afonsof.com/jenkins-material-theme/
+
+7. User Management
+Go to Manage Jenkins → Users.
+Click Create User and fill in the details.
+Test login with the newly created account.
+By default, new users have full access, which is not recommended. RBAC (Role-Based Access Control) should be applied to restrict permissions.
+
+8. RBAC Setup
+Log in as admin.
+Go to Manage Jenkins → Manage Plugins and install Role-based Authorization Strategy.
+Navigate to Manage Jenkins → Configure Global Security → Authorization → Role-Based Strategy and apply/save.
+Log in as the newly created user to verify restricted access.
+Go to Manage Jenkins → Manage and Assign Roles to create roles and assign them to users.
+
+Example Task:
+Assign Project1 user the permission to create 4 jobs.
+Assign Project2 user the permission to execute those jobs only.
