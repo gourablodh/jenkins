@@ -135,10 +135,52 @@ Definition: Jobs can be temporarily disabled to prevent execution. Notes: Useful
 or development. How to enable/disable: Job → Configure → Disable project checkbox.
 
 15. Concurrent / Parallel Builds
-Definition: Allows multiple instances of a job to run simultaneously. Notes: Default is single execution.
+Definition: Allows multiple instances of a job to run simultaneously. Notes: Default is single execution. 
+By default 2 jobs cannot run concurrently so it must be enable.
 How to enable: Job → Configure → General → Execute concurrent builds if necessary.
 
-16. 
+16. Retry Count
+Definition: Number of times Jenkins retries a failed build step. Notes: Ensures transient failures do not
+if at build section get error it failed on that time by default it cannot retry. 
+So need to explicitly mention how many time it will retry.
+break the pipeline. How to enable: Job → Configure → Advanced → SCM checkout retry count.
+
+17. Throttle Build
+Definition: Limit frequency of job executions. Notes: Example: run maximum 3 builds per day. 
+If want your job will build 3 times at a one day or want to limit to build it.
+How to enable: Job → Configure → Build Throttle (via plugin if required). day or minutes or months
+
+18. Custom Workspace
+Definition: A specific folder to run job builds. Notes: Prevents conflicts from previous builds. 
+By default there have Jenkins workspace but you can explicitly defined your custom workspace.
+How to enable: Job → Configure → Advanced → Use custom workspace.
+
+19. Change Display Name / Rename Job
+Definition: Modify job name or display name. Notes: Improves clarity in dashboard. How to enable:
+Job → Configure → Advanced → Display Name or Job → Rename.
+
+20. Jenkins Block Build when Upstream/Downstream job is building
+a. Upstream job: upstream job means parent job when upstream it means it trigger child job (Downstream).
+Downstream: It means child job. 
+
+How to anable this: Job> configure> trigger> Build after other projects are built > give parent job name. It only enable from child job. 
+Practical: at first create parent job - sleep 20 and then child sleep 10 during that time enable "Build after other projects are built" (under triggers section)
+
+21. Block Build on Upstream/Downstream Jobs
+Definition: Prevents child/parent job conflicts during execution. Notes: Ensures jobs run sequentially
+when needed. How to enable: Job → Configure → Advanced → Block build when upstream/
+downstream project is building.
+
+By default when trigger upstream job after it completes process then child job will run. 
+But if someone trigger child job during parent job building then can be faced some issue during building. 
+SO it can be disable which is called "Block build when upstream project is building?" iIt enables from child job.
+
+By default when trigger upstream job after it completes process child job will run. 
+But if someone trigger parent job during child job building then can be faced some issue during building. 
+SO it can be disable which is called "Block build when downstream project is building". 
+it enable from parent job.
+
+
 
 
 
