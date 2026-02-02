@@ -71,3 +71,87 @@ Go to Manage Jenkins → Manage and Assign Roles to create roles and assign them
 Example Task:
 Assign Project1 user the permission to create 4 jobs.
 Assign Project2 user the permission to execute those jobs only.
+
+9. Environment Variable
+Definition: Environment variables in Jenkins are
+key-value pairs used to store information that can be accessed by jobs during execution. Notes: - Create
+job and set variables:
+NAME=gklodh
+echo "My name is ${NAME}"
+ROLL=2
+echo $ROLL
+
+Create job to access those variable.
+
+- Jenkins provides default environment variables visible in each job console. How to enable: In a job, go
+to Configure → Build Environment → Use environment variables.
+
+There have Jenkins default variable which can be seen by clicking on See the list of available environment variables. But this will change by project by project.
+
+10. Global Variables
+Definition: Variables accessible across all Jenkins jobs for consistency. Notes: - Example: GLOBAL_VAR
+can be defined and used in any job. How to enable: Manage Jenkins → System → Global properties
+→ Environment variables. Add key-value pairs.
+
+Create job to access those variable.
+
+11. Parameterized / User Input Variables
+Definition: Variables that users provide input for before a job runs. Notes: - Types: Boolean, Choice,
+Credentials, File, Multi-line String, Password, Run, String. - Example: File parameter allows uploading a
+file and using it: cat $filePath . How to enable: Job → Configure → This project is parameterized
+→ Add parameter.
+
+Boolean Parameter
+Choice Parameter
+Credentials Parameter
+File Parameter
+Multi-line String Parameter
+Password Parameter
+Run Parameter
+String Parameter
+
+Check file parameter, password parameter
+click on filepath and give variable such as filePath
+
+12. Jenkins Timeout
+Definition: Maximum duration a job is allowed to run. Notes: - Example: sleep 100 with timeout 1
+minute. How to enable: Job → Configure → Build Environment → Terminate build if stuck .
+Optionally mark build as failed.
+
+Note: If want job became failed> Add action then Select failed
+
+13. Jenkins Timestamp
+Definition: Adds time info to console logs. Notes: Helpful for tracking execution duration of each step.
+How to enable: Job → Configure → Build Environment → Add timestamps to console output.
+
+execute job:
+echo "hello"
+sleep 3
+echo "hello world"
+after execute jobs check console output
+
+14. Enable / Disable Jobs
+Definition: Jobs can be temporarily disabled to prevent execution. Notes: Useful during maintenance
+or development. How to enable/disable: Job → Configure → Disable project checkbox.
+
+15. Concurrent / Parallel Builds
+Definition: Allows multiple instances of a job to run simultaneously. Notes: Default is single execution.
+How to enable: Job → Configure → General → Execute concurrent builds if necessary.
+
+16. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
