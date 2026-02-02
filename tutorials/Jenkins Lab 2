@@ -1,0 +1,298 @@
+------------------------
+Jenkins Create first Jenkins Pipeline using Build Pipeline
+------------------------
+Code> build> deploy on test server> deploy on prod server.
+a. Create 2 jobs to run
+job1- echo "build"
+job2: echo "deploy to test"
+
+b. Go to plugins> install "Build pipeline" install it and restart
+c. go to build job> search for "Post-build Actions" > select "Projects to build" > select Projects which after run of build  or select deploy-job
+and also select your condition when it will run.
+d. To view pipeline: come to dashboard > click + sign (where display all jobs) > Build Pipeline View> give name and create
+e. Select parent job
+
+------------------------
+Jenkins Continuous Delivery/Deployment
+------------------------
+Continuous Delivery (CD) and Continuous Deployment (also CD) are DevOps practices that automate the software release process to deliver updates faster and more reliably. Continuous Delivery ensures code is always in a deployable state, requiring manual approval to push to production, whereas Continuous Deployment automates this final step, releasing every approved change directly to users. 
+
+a. create 1 job
+job-deploy-prod- echo "deploy to production"
+
+b. Go to Job-test-deploy > configure > under post-build option> add post-build> select Projects to build and select deploy-job-production
+
+c. go to pipeline dashboard and run the jobs
+
+#### it is the automatic (CI) process but when need last job manually trigger :
+Go to Job > configure > under post-build option> add post-build> select Build other projects (manual step) and select job-deploy-prod
+
+Build the pipeline
+
+------------------------
+Jenkins Parallel Job in Jenkins Pipeline
+------------------------
+Create job - job-qualitycheck (echo "code is fine and approved for production")
+
+a. go to build job> search for "Post-build Actions" > select "Projects to build" > select Projects to build and select deploy-job, job-qualitycheck. It will run 2 job at the same time in pipeline.
+
+b. go to pipeline dashboard and run the jobs
+
+
+Assign a Job to jenkins slave
+
+
+------------------------
+Jenkins What/Why Jenkins Slave (Jenkins Slave Installation) (Setup Jenkins Slave)
+------------------------
+A Jenkins slave, now officially referred to as a Jenkins agent or node, is a machine (physical, VM, or container) that executes build and deployment jobs delegated by the central Jenkins controller (master). 
+Why are Jenkins Agents Used?
+The agent architecture is used to implement distributed builds, which provides several key benefits: 
+Scalability: Offloads job execution from the controller, allowing a single Jenkins installation to manage a large number of projects and scale horizontally with the workload.
+Diverse Environments: Enables builds on different operating systems (e.g., Windows, Linux, macOS) or with specific toolsets (e.g., different Java, Maven, or Node.js versions) that may be incompatible on a single machine.
+Performance: Prevents the controller from being overloaded by computationally intensive build processes, ensuring it can focus on management tasks, scheduling, and monitoring.
+Security: Isolates job execution from the controller, reducing security risks as a compromised agent would not have full permissions on all Jenkins resources. 
+
+master will assign job to slave and check slave up or not. 
+
+How to configure slave: managed> nodes>
+
+
+
+Pending ..............
+
+------------------------
+Jenkins Create first Pipeline as code - Create first Jenkinsfile
+------------------------
+1. Why needed Jenkins pipeline as a code.
+2. How to create
+a. new item
+b. name: pipeline-as-code-1
+c. select pipeline
+d. This pipeline code written by scripted and declarative. here we will use declarative.
+e. select hello world
+f. write manually on notepad.
+g. build this job.
+Install Build Pipeline Plugin
+Version2.1.0
+
+h. reconfigure this pipeline by: 
+
+pipeline {
+    agent any
+    stages {
+        stage('Commit') {
+            steps {
+                echo 'Commit new code from developer'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'After commiting new code will be build'
+            }
+        }
+        stage('QA test') {
+            steps {
+                echo 'After building new code will be check for QA'
+            }
+        }
+        stage('Deploy-T') {
+            steps {
+                echo 'After check for QA new code will be deploy for test'
+            }
+        }
+        stage('Deploy-P') {
+            steps {
+                echo 'After deploy for test new code will be deploy for production'
+            }
+        }
+    }
+}
+
+------------------------
+Jenkins Create Pipeline as code - Run a Command
+------------------------
+pipeline {
+    agent any
+
+    stages {
+        stage('Run a command') {
+            steps {
+                sh 'date'
+                sh 'pwd'
+            }
+        }
+    }
+}
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Run a command') {
+            steps {
+                sh '''
+                ls
+                hostname
+                '''
+            }
+        }
+    }
+}
+
+------------------------
+Jenkins Create Pipeline as code - Variable/Environment Variable
+------------------------
+pipeline {
+    agent any
+    environment {
+        name='gourab'
+        time='10 PM'
+    }
+
+    stages {
+        stage('Run a command') {
+            steps {
+                sh '''
+                echo $name
+                echo $time
+                '''
+            }
+        }
+    }
+}
+
+
+#######if want env for specific stages
+pipeline {
+    agent any
+    environment {
+        name='gourab'
+        time='10 PM'
+    }
+
+    stages {
+        stage('Run a command') {
+            steps {
+                sh '''
+                echo $name
+                echo $time
+                '''
+            }
+        }
+         stage('Run a command2') {
+              environment {
+                 name='lodh'
+                 time='11.30 PM'
+            }
+            steps {
+                sh '''
+                echo $name
+                echo $time
+                '''
+            }
+        }
+         stage('Run a command3') {
+            steps {
+                sh '''
+                echo $name
+                echo $time
+                '''
+            }
+        }
+    }
+}
+
+
+------------------------
+Jenkins Create Pipeline as code - Build Parameters - Parameters
+------------------------
+pipeline {
+    agent any
+
+    environment {
+        name = 'gourab'
+        time = '10 PM'
+    }
+
+    parameters {
+        string(
+            name: 'Person',
+            defaultValue: 'Gourab Lodh',
+            description: 'who are you'
+        )
+    }
+
+    stages {
+
+        stage('Run a command') {
+            steps {
+                sh '''
+                echo "Stage 1"
+                echo "name=$name"
+                echo "time=$time"
+                echo "person=$Person"
+                '''
+            }
+        }
+
+        stage('Run a command2') {
+            environment {
+try with Boolean and choice
+
+pipeline {
+    agent any
+    environment {
+        name = 'gourab'
+        title = 'lodh'
+    }
+    parameters {
+        string(
+            name: 'person',
+            defaultValue: 'gklodh',
+            description: 'who are you'
+            )
+        booleanParam(
+            name: 'ismale',
+            defaultValue: 'yes',
+            description: 'gender'
+            )
+        choice(
+            name: 'City',
+            choices: ['kolkata', 'delhi', 'kualalamput', 'iloilo city'],
+            description: 'who are you'
+            )
+        string(
+            name: 'person',
+            defaultValue: 'gklodh',
+            description: 'who are you'
+            )
+            
+    }
+
+    stages {
+        stage('test') {
+            steps {
+                sh 'ls -l'
+                sh 'pwd'
+                sh 'echo $name'
+                sh 'echo $title'
+            }
+        }
+        stage('deploy') {
+            environment {
+                 name='test'
+                 title='project'
+                }
+            steps {
+                sh '''
+                hostname
+                df -h
+                echo $name
+                echo $title
+                '''
+            }
+        }
+    }
+}
+
