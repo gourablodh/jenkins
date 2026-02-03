@@ -1,0 +1,136 @@
+1. Jenkins Create Pipeline as code -  Input Parameters - Input From User
+Input parameters allow users to provide values (like name, choice, or yes/no) before a Jenkins job starts running.
+
+pipeline {
+    agent any
+    environment {
+        name = 'gourab'
+        title = 'lodh'
+    }
+    parameters {
+        string(
+            name: 'person',
+            defaultValue: 'gklodh',
+            description: 'who are you'
+            )
+        booleanParam(
+            name: 'ismale',
+            defaultValue: 'yes',
+            description: 'gender'
+            )
+        string(
+            name: 'person',
+            defaultValue: 'gklodh',
+            description: 'who are you'
+            )
+            
+    }
+
+    stages {
+        stage('test') {
+            steps {
+                sh 'ls -l'
+                sh 'pwd'
+                sh 'echo $name'
+                sh 'echo $title'
+            }
+        }
+        stage('deploy') {
+            environment {
+                 name='test'
+                 title='project'
+                }
+            input {
+                message "should we continue"
+                ok "yes you should"
+            }
+            steps {
+                sh '''
+                hostname
+                df -h
+                echo $name
+                echo $title
+                '''
+            }
+        }
+    }
+}
+
+
+
+
+2. Jenkins Create Pipeline as code -  Pipeline as code - Post Actions
+Post options define actions Jenkins should run after the pipeline finishes, such as on success, failure, or always.
+
+Which always execute whether pipeline run or failed
+
+pipeline {
+    agent any
+
+    environment {
+        NAME = 'gourab'
+        TIME = '10 PM'
+    }
+
+    parameters {
+        string(
+            name: 'PERSON',
+            defaultValue: 'Gourab Lodh',
+            description: 'who are you'
+        )
+       }
+
+    stages {
+        stage('Run a command') {
+            steps {
+                sh '''
+                echo "Stage 1"
+                echo "name=$NAME"
+                echo "time=$TIME"
+                echo "person=$PERSON"
+                '''
+            }
+        }
+    }
+    post { 
+        always { 
+            echo 'I will always say Hello again!'
+        }
+    }
+}
+
+
+Check post action: https://www.jenkins.io/doc/book/pipeline/syntax/
+Can be passed - success, failed or message of different types
+Real life use:
+
+
+
+4. Jenkins Create Pipeline as code -  Short Trick
+
+a. Run pipeline by pipeline script from SCM.
+When you write Jenkins code this You can be store this code to GitHub for version control:
+1. Create a new github repo
+2. Copy Jenkins code and paste on new file
+3. File name should be Jenkins file
+4. From Jenkins: create new job
+a. Select pipeline script from SCM
+b. select git
+c. Fill necessary details
+d. Select branch as per GitHub repo
+e. Run the job
+
+To easy write the codes:
+1. To write the code can be write on VScode with Jenkins plugin.
+2. By using Pipeline Syntax which help you to write groovy code for pipeline
+
+
+
+5. Jenkins Create Pipeline as code -   Easiest Way To Write Jenkinsfile (Blue Ocean)
+Blue Ocean is a Jenkins plugin that provides a modern, visual, and user-friendly interface to create, view, and manage Jenkins pipelines easily.
+
+1. Go to plugin and install Blue Ocean
+2. back to Jenkins default dashboard and click on Blue Ocean
+a. where can run pipeline
+b. restart any stages
+c. Create new pipeline from GitHub repo
