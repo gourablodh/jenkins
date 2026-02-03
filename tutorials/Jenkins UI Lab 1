@@ -55,6 +55,55 @@ Suppose install plugin from URL: managed jenkins > https://cdn.rawgit.com/afonso
 https://www.youtube.com/watch?v=Nih9eM-p-CQ&list=PL6XT0grm_Tfi21F8O0TvHmb78P2uEmhDq&index=8
 https://www.afonsof.com/jenkins-material-theme/
 
+
+6.a. Job trigger
+usually this job manually trigger 
+go to > job/demo4/configure and select Trigger builds remotely (e.g., from scripts)
+copy token and access it from browser but it can trigger from same browser not different
+
+install build authorization token root plugin 
+
+access by : http://10.106.0.7:8080//job/demo3/build?token=mytest
+or from terminal: curl http://10.106.0.7:8080/buildByToken/build?job=demo4&token=my
+
+------------------------
+Build trigger - Build after other projects are built
+------------------------
+create job demo2
+go to triggers enable Build after other projects are built
+and select which project trigger this job (there i did demo1)
+run hello world
+trigger demo1 and check for demo2
+
+1. Trigger only if build is stable : if success then it trigger
+2. Trigger even if the build is unstable : if get unstable
+3. Trigger even if the build fails
+4. Always trigger, even if the build is aborted : it always
+Unstable means go to last advance option give 10 and execute command exit 10
+
+------------------------
+Build trigger - Build periodically
+------------------------
+create job demo2
+go to triggers enable Build peridocally
+and select your crontab
+run hello world
+
+------------------------
+Build trigger - Poll SCM
+------------------------
+The key difference is that Poll SCM triggers a build only if changes are detected in the source code repository. 
+Such as at 8PM someone commit to remote repo then it trigger then someone commit his code after 2 days then it will trigger in the meantime it will not trigger.
+The key difference is that Poll SCM triggers a build only if changes are detected in the source code repository, while Build periodically triggers a 
+build at fixed time intervals regardless of whether any code has changed. 
+create job demo5
+H/2 * * * * (it will check every 2 minutes on github)
+also enable source code management
+
+
+GitHub hook trigger for GITScm polling
+Whenever new code will be come to GitHub Jenkins automatically pull them on that timr.
+
 7. User Management
 Go to Manage Jenkins → Users.
 Click Create User and fill in the details.
