@@ -13,21 +13,32 @@ hostname'''
     }
 
     stage('deploy') {
-      environment {
-        name = 'test'
-        title = 'project'
-      }
-      input {
-        message 'should we continue'
-        id 'yes you should'
-      }
-      steps {
-        sh '''
+      parallel {
+        stage('deploy') {
+          environment {
+            name = 'test'
+            title = 'project'
+          }
+          input {
+            message 'should we continue'
+            id 'yes you should'
+          }
+          steps {
+            sh '''
                 hostname
                 df -h
                 echo $name
                 echo $title
                 '''
+          }
+        }
+
+        stage('QA') {
+          steps {
+            sleep 2
+          }
+        }
+
       }
     }
 
