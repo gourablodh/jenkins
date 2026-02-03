@@ -121,6 +121,34 @@ Example Task:
 Assign Project1 user the permission to create 4 jobs.
 Assign Project2 user the permission to execute those jobs only.
 
+se of git plugin and clean workspace.
+------------------------
+Create new job > free style project and run hello world
+developer write and keep code on GitHub. 
+create a repo and add a file index.py
+write some code.
+ls
+git clone
+cd directory name
+cat index.py
+cat readme.md
+
+check output
+again run and check console output
+It failed as previously already clone and have this directory.
+SO
+/job/demo1/configure> delete workspace before build start
+
+before we clone git repo but now tells Jenkins to clone git repo
+change branch
+execute shell
+
+# clone
+ls
+pwd
+ls -l
+
+
 9. Environment Variable
 Definition: Environment variables in Jenkins are
 key-value pairs used to store information that can be accessed by jobs during execution. Notes: - Create
