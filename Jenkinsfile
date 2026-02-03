@@ -31,6 +31,12 @@ hostname'''
       }
     }
 
+    stage('deploy-prod') {
+      steps {
+        sleep 3
+      }
+    }
+
   }
   environment {
     name = 'gourab'
