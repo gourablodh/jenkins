@@ -1,0 +1,93 @@
+=========================
+Project A.1
+=========================
+Goal: Learn Jenkins pipeline basics: pull code from Git and echo build info.
+-----------------------------------
+Developer pushes code → Jenkins pulls from Git → Build (echo)
+-----------------------------------
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/gourablodh/database.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Building application..."
+            }
+        }
+    }
+}
+
+=========================
+Project A.2
+=========================
+Goal: Build and deploy a simple website automatically on Nginx.
+-----------------------------------
+Git push → Jenkins → Build → Deploy to Nginx
+-----------------------------------
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/example/static-site.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'echo Building static website'
+            }
+        }
+
+        stage('Deploy') {
+            input {
+                message: 'deploy nginx server'
+                ok: 'please approve for deploy nginx'
+            }
+            steps {
+                sh 'sudo cp -r * /var/www/html/'
+                sh 'sudo systemctl restart nginx'
+            }
+        }
+    }
+}
+
+=========================
+Project A.3
+=========================
+Goal: Build Docker image from code and push it to a container registry.
+-----------------------------------
+Git push → Jenkins → Build Docker image → Push to registry
+-----------------------------------
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git 'https://github.com/example/docker-app.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t myuser/app:v1 .'
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker login -u myuser -p mypassword'
+                sh 'docker push myuser/app:v1'
+            }
+        }
+    }
+}
